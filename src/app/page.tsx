@@ -3,34 +3,20 @@ import { db } from "~/server/db";
 
 export const dynamic = "force-dynamic";
 
-const mockUrls = [
-  "https://hktcsccavm.ufs.sh/f/ufhDLWrGmIUJmPeZnxpoaCZdJNwtKSp2987hbBAn3UTqFjRP",
-  "https://hktcsccavm.ufs.sh/f/ufhDLWrGmIUJDDclrvGjl8Wm6S2Mw5JoaitzLsEXUKkVerZq",
-  "https://hktcsccavm.ufs.sh/f/ufhDLWrGmIUJFirz0qANH4DehoVTcKOx1m2tBk5UC69vi3Rj",
-  "https://hktcsccavm.ufs.sh/f/ufhDLWrGmIUJfkvMkjRMCdv2S6QNb1iustFHLpJrKoRhEl35",
-];
-
-const mockImages = [...mockUrls, ...mockUrls, ...mockUrls].map(
-  (url, index) => ({
-    id: index + 1,
-    url,
-  }),
-);
-
 export default async function HomePage() {
-  const posts = await db.query.posts.findMany();
-
-  console.log(posts);
+  const images = await db.query.images.findMany({
+    /* The model and an object of helpers is passed to the orderBy function,
+    we use destructuring to get the desc helper from the list of helpers */
+    orderBy: (model, { desc }) => desc(model.createdAt),
+  });
 
   return (
     <main className="">
       <div className="flex flex-wrap gap-4">
-        {posts.map((post) => (
-          <div key={post.id}>{post.name}</div>
-        ))}
-        {mockImages.map((image) => (
-          <div key={image.id} className="w-48">
+        {[...images, ...images, ...images].map((image, i) => (
+          <div key={image.id + "-" + i} className="flex w-48 flex-col">
             <img src={image.url} />
+            <div>{image.name}</div>
           </div>
         ))}
       </div>
