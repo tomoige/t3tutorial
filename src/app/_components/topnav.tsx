@@ -3,27 +3,19 @@ import React from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
+import SimpleUploadButton from "./simple-upload-button";
 
 function TopNav() {
-  const router = useRouter();
-
   return (
     <nav className="flex w-full items-center justify-between border-b p-4 text-xl font-semibold">
       <div>Gallery</div>
       <div>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center gap-4">
           <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <UploadButton
-              endpoint="imageUploader"
-              onClientUploadComplete={() => {
-                //Reruns current route on server and sends you necessary parts to update the pages content
-                console.log("uploaded");
-                router.refresh();
-              }}
-            />
+            <SimpleUploadButton />
             <UserButton />
           </SignedIn>
         </div>
