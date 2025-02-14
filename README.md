@@ -13,8 +13,8 @@
 - [x] Use Next/Image component
 - [x] Error management (w/ Sentry)
 - [x] Routing/image page (parallel route)
-- [ ] Delete button (w/ Server Actions)
 - [ ] Analytics (posthog)
+- [ ] Delete button (w/ Server Actions)
 - [ ] Ratelimiting (upstash)
 - [ ] Make auth flow (excalidraw)
 - [ ] Make flow for uploading images
