@@ -4,6 +4,7 @@ import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "~/hooks/use-toast";
+import { usePostHog } from "posthog-js/react";
 
 // inferred input off useUploadThing
 type Input = Parameters<typeof useUploadThing>;
@@ -73,9 +74,11 @@ function LoadingSpinnerSVG() {
 
 export default function SimpleUploadButton() {
   const router = useRouter();
+  const postHog = usePostHog();
   const { toast, dismiss } = useToast();
   const { inputProps } = useUploadThingInputProps("imageUploader", {
     onUploadBegin() {
+      postHog.capture("upload_begin");
       toast({
         title: "Uploading...",
         description: "",
